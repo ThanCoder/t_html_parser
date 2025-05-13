@@ -1,7 +1,8 @@
 name: t_html_parser
 description: "A new Flutter package project."
 version: 0.0.1
-homepage:
+homepage: https://github.com/ThanCoder/t_html_parser
+repository: https://github.com/ThanCoder/t_html_parser
 
 environment:
   sdk: ^3.7.0
