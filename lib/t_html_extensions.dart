@@ -41,7 +41,6 @@ extension HtmlExtension on html.Element {
 
   String getQuerySelectorText({
     required String selector,
-    required String attr,
   }) {
     return THtmlParser.getQuerySelectorText(this, selector);
   }

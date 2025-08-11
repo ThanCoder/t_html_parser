@@ -16,14 +16,14 @@ class MyApp extends StatelessWidget {
 
     final attr = ele!.getQuerySelectorAttr(selector: '', attr: '');
     final htmlText = ele.getQuerySelectorHtml(selector: '', attr: '');
-    final text = ele.getQuerySelectorText(selector: '', attr: '');
+    final text = ele.getQuerySelectorText(selector: '');
     // with class
     final domC = THtmlParser.getHtmlDocument(html);
     final eleC = THtmlParser.getHtmlElement(html);
 
     final attrC = eleC!.getQuerySelectorAttr(selector: '', attr: '');
     final htmlTextC = eleC.getQuerySelectorHtml(selector: '', attr: '');
-    final textC = eleC.getQuerySelectorText(selector: '', attr: '');
+    final textC = eleC.getQuerySelectorText(selector: '');
   }
 
   @override
