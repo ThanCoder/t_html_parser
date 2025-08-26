@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:html/dom.dart' as html;
 
 export 't_html_extensions.dart';
+export 't_extractor.dart';
+export 't_selector_rules.dart';
 
 class THtmlParser {
   static html.Document getHtmlDocument(String content) {

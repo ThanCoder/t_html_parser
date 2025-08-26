@@ -24,7 +24,13 @@ extension HtmlFromStringExtension on String {
   }
 }
 
-extension HtmlExtension on html.Element {
+extension HtmlDomExtension on html.Document {
+  void cleanDomTag({String tagNames = 'script,style,noscript'}) {
+    querySelectorAll(tagNames).forEach((e) => e.remove());
+  }
+}
+
+extension HtmlEleExtension on html.Element {
   String getQuerySelectorAttr({
     required String selector,
     required String attr,
@@ -32,16 +38,15 @@ extension HtmlExtension on html.Element {
     return THtmlParser.getQuerySelectorAttr(this, selector, attr);
   }
 
-  String getQuerySelectorHtml({
-    required String selector,
-    required String attr,
-  }) {
+  void cleanEleTag({String tagNames = 'script,style,noscript'}) {
+    querySelectorAll(tagNames).forEach((e) => e.remove());
+  }
+
+  String getQuerySelectorHtml({required String selector}) {
     return THtmlParser.getQuerySelectorHtml(this, selector);
   }
 
-  String getQuerySelectorText({
-    required String selector,
-  }) {
+  String getQuerySelectorText({required String selector}) {
     return THtmlParser.getQuerySelectorText(this, selector);
   }
 }
