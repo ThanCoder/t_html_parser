@@ -2,7 +2,7 @@
 
 ## Added
 
-- Some Func Added
+- `Some Func Added`
 
 # 1.0.0
 
