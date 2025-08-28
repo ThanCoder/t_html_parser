@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:html/dom.dart' as html;
+export 'package:html/dom.dart';
 
 export 't_html_extensions.dart';
 export 't_extractor.dart';

@@ -1,3 +1,9 @@
+# 1.1.0
+
+## Added
+
+- Some Func Added
+
 # 1.0.0
 
 ## Added
