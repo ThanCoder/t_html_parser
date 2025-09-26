@@ -1,6 +1,21 @@
-## THtmlParser
+# THtmlParser
 
-html package ကို helper class ထပ်ထည့်ထားပါပဲ။
+### html package ကို helper class ထပ်ထည့်ထားပါပဲ။
+
+## New Method
+
+```Dart
+// with extension
+final html = "<div><p>Hello</p></div>";
+final dom = html.toHtmlDocument;
+final ele = html.toHtmlElement; // null ?
+
+//FQuery Class
+final query = FQuery(selector: 'h1',);
+print(query.getResult(ele));
+```
+
+## Old Methods
 
 ```Dart
 // with extension

@@ -1,3 +1,8 @@
+# 1.1.1
+
+- Added `FQuery`
+- Fixed `Some Error Fixed`
+
 # 1.1.0
 
 ## Added
