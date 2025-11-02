@@ -3,7 +3,7 @@ import 'package:t_html_parser/core/t_html_extensions.dart';
 
 class FQuery {
   FQuery({
-    required this.selector,
+    this.selector,
     this.attr,
     this.isParentElement = false,
     this.isHtmlStyleText = false,
@@ -15,7 +15,9 @@ class FQuery {
   ///
   /// querySelector `class,id`
   ///
-  final String selector;
+  /// selector == null ? `current element` : `class,id`
+  ///
+  final String? selector;
 
   ///
   /// element attribute `src,href,data-src` default `null`
@@ -49,19 +51,19 @@ class FQuery {
 
   ///
   /// get All result -> `String`
-  /// 
+  ///
   /// auto `String.tim()`
   ///
   String getResult(Element ele) {
     if (isParentElement && ele.parent != null) {
       ele = ele.parent!;
     }
-    // print(ele.outerHtml);
-    if (selector.isEmpty && attr != null) {
+    // current attr
+    if (selector == null && attr != null) {
       return ele.attributes[attr!].toString().trim();
     }
     // selector မရှိရင်
-    if (selector.isEmpty) {
+    if (selector == null) {
       if (isHtmlStyleText) {
         final html = ele.outerHtml;
         return html.cleanHtmlTag().trim();
@@ -71,30 +73,30 @@ class FQuery {
 
     // attr ရှိနေရင်
     if (attr != null) {
-      return ele.getQuerySelectorAttr(selector: selector, attr: attr!).trim();
+      return ele.getQuerySelectorAttr(selector: selector!, attr: attr!).trim();
     } else {
       // html style ကို clean ထုတ်မယ်
       if (isHtmlStyleText) {
-        final html = ele.querySelector(selector)?.outerHtml ?? '';
+        final html = ele.querySelector(selector!)?.outerHtml ?? '';
         return html.cleanHtmlTag().trim();
       }
       // is multi selector text
       if (isMultiSelector) {
         List<String> mulV = [];
-        for (var mulE in ele.querySelectorAll(selector)) {
+        for (var mulE in ele.querySelectorAll(selector!)) {
           mulV.add(mulE.text.trim());
         }
         return mulV.join(multiSelectorValueJoiner);
       }
       // index ရှိနေရင်
       if (index != null) {
-        final eles = ele.querySelectorAll(selector);
+        final eles = ele.querySelectorAll(selector!);
         if (eles.length <= (index ?? 0)) return '';
         final res = eles[index ?? 0];
         return res.text.trim();
       }
       // text
-      return ele.getQuerySelectorText(selector: selector).trim();
+      return ele.getQuerySelectorText(selector: selector!).trim();
     }
   }
 }
