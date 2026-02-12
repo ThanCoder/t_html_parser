@@ -23,6 +23,9 @@ extension HtmlFromStringExtension on String {
     return THtmlParser.getNewLine(this, replacer: replacer);
   }
 
+  ///
+  /// ### Clean Html Tag,Js Tag
+  ///
   String cleanHtmlTag() {
     // remove tag
     var res = replaceAll(RegExp(r'<br\s*/?>', caseSensitive: false), '\n');
@@ -30,6 +33,7 @@ extension HtmlFromStringExtension on String {
       RegExp(r'</?(p|div|h[1-6])[^>]*>', caseSensitive: false),
       '\n',
     );
+
     res = res.replaceAll(RegExp(r'<[^>]+>'), '');
     res = res.replaceAll(RegExp(r'\n\s*\n+'), '\n\n');
     // space အမျိုးအစားများ
@@ -44,7 +48,17 @@ extension HtmlFromStringExtension on String {
     res = res.replaceAll("&amp;", "&");
     res = res.replaceAll("&quot;", "\"");
     res = res.replaceAll("&apos;", "'");
-    return res;
+
+    // Function အစကနေ အဆုံးထိ ဖမ်းမယ့် RegExp
+    // (function(...) { ... })(...) ပုံစံကို ဖမ်းမယ့် pattern
+    final jsBlockPattern = RegExp(
+      r'\(function\s*\(.*?\)\s*\{[\s\S]*?\}\)\s*\(.*?\);?',
+      multiLine: true,
+    );
+
+    // ရှင်းထုတ်လိုက်မယ်
+    res = res.replaceAll(jsBlockPattern, '');
+    return res.trim();
   }
 }
 

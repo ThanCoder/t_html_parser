@@ -2,6 +2,49 @@
 
 ## html package ကို helper class ထပ်ထည့်ထားပါပဲ။
 
+## QueryResult
+
+```dart
+final url =
+      'https://mmxianxia.com/novels/immortality-the-lord-of-the-holy-dynasty-invites-me-to-come-out-of-seclusion/';
+
+final client = TClient();
+final res = await client.get(url);
+final html = res.data.toString();
+
+final title = QueryResult(
+    index: 0,
+    attr: Attribute.fromHtml(HtmlAttribute.text),
+    selector: '.entry-title',
+);
+final otherTitle = QueryResult(
+    index: 0,
+    attr: Attribute.fromHtml(HtmlAttribute.text),
+    selector: '.entry-title',
+);
+final author = QueryResult(
+    index: 1,
+    attr: Attribute.fromHtml(HtmlAttribute.text),
+    selector: '.serl .serval',
+);
+final translator = QueryResult(
+    index: 2,
+    attr: Attribute.fromHtml(HtmlAttribute.text),
+    selector: '.serl .serval',
+);
+final content = QueryResult(
+    index: 0,
+    attr: Attribute.fromHtml(HtmlAttribute.text),
+    selector: '.entry-content',
+);
+
+print('title: ${title.getResult(html)}');
+print('otherTitle: ${otherTitle.getResult(html)}');
+print('author: ${author.getResult(html)}');
+print('translator: ${translator.getResult(html)}');
+print('content: ${content.getResult(html)}');
+```
+
 ## New Method
 
 ```Dart
