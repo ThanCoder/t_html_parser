@@ -1,7 +1,5 @@
 # THtmlParser
 
-## html package ကို helper class ထပ်ထည့်ထားပါပဲ။
-
 ## QueryResult
 
 ```dart

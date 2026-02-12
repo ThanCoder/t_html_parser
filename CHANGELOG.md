@@ -1,4 +1,8 @@
-# 1.1.2
+# 1.2.0
+
+- Added `QueryResult`
+
+## 1.1.2
 
 - Fixed `FQuery`
 
