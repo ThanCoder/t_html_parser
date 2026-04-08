@@ -16,6 +16,7 @@ enum HtmlAttribute {
   src('src'),
   html('html'),
   outerHtml('outerHtml'),
+  dataSrc('data-src'),
   alt('alt'); // နောက်ထပ် လိုအပ်တာတွေ ထပ်ထည့်နိုင်ပါတယ်
 
   final String value;

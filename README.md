@@ -1,5 +1,40 @@
 # THtmlParser
 
+## DomSelector
+
+```dart
+final list = DomSelector.getResultList(
+    html,
+    selectorAll: '.g-3 .col-6',
+    queries: [
+      DomSingleQuery(
+        (ele) => ele.getQuerySelectorText(selector: '.card-title'),
+      ),
+      DomSingleQuery(
+        (ele) => ele.getQuerySelectorAttr(selector: 'a', attr: 'href'),
+      ),
+      DomSingleQuery(
+        (ele) => ele.getQuerySelectorAttr(selector: 'img', attr: 'src'),
+      ),
+    ],
+  );
+
+final pagi = DomSelector.getResultList(
+html,
+selectorAll: '.pagination .page-item',
+queries: [
+    DomSingleQuery((ele) => ele.getQuerySelectorText(selector: 'a')),
+    DomSingleQuery(
+    (ele) => ele.getQuerySelectorAttr(selector: 'a', attr: 'href'),
+    ),
+    ],
+);
+
+  print(list); //[[ယုန်ထောင် ကြောင်မိ, /0fc1dd15e956, /cover/1352.jpg],....]
+
+  print(pagi); // [[1, /?page=1], [2, /?page=2], [3, /?page=3], [, ], [72, /?page=72], [ရှေ့သို့ ›, /?page=2], [နောက်ဆုံး », /?page=72]]
+```
+
 ## QueryResult
 
 ```dart
