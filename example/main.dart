@@ -2,15 +2,18 @@ import 'dart:io';
 
 import 'package:t_client/t_client.dart';
 import 'package:t_html_parser/core/dom_selector.dart';
-import 'package:t_html_parser/core/q_result/attributes.dart';
+import 'package:t_html_parser/core/extensions/t_html_element_extensions.dart';
+import 'package:t_html_parser/core/extensions/t_html_string_extensions.dart';
+import 'package:t_html_parser/core/types/attributes.dart';
 import 'package:t_html_parser/core/q_result/query_result.dart';
-import 'package:t_html_parser/core/t_html_extensions.dart';
 
 void main() async {
-  final url = 'https://allsaroak.com/';
+  // final url = 'https://allsaroak.com/0fc1dd15e956';
+  final url =
+      'https://node-browser.vercel.app?url=https://mmsubmovie.com/movies/';
 
   final client = TClient();
-  final respFile = File('resp.html');
+  final respFile = File('movie.html');
   String html = '';
   if (respFile.existsSync()) {
     html = await respFile.readAsString();
@@ -19,7 +22,37 @@ void main() async {
     html = res.data.toString();
     await respFile.writeAsString(html);
   }
-  fetchApyar(html);
+
+  final result = QueryResult(
+    attr: Attribute.fromHtml(HtmlAttribute.text),
+    selector: '#archive-content .movies',
+  );
+
+  final res = result.getResultList(
+    html,
+    singleQueries: [
+      QueryResultSingleQuery(
+        (ele) => ele.getQuerySelectorText(selector: '.data a'),
+      ),
+      QueryResultSingleQuery(
+        (ele) => ele.getQuerySelectorAttr(
+          selector: '.data a',
+          attr: Attribute('href'),
+        ),
+      ),
+      QueryResultSingleQuery(
+        (ele) => ele.getQuerySelectorAttr(
+          selector: '.poster img',
+          attr: Attribute.fromHtml(HtmlAttribute.src),
+        ),
+      ),
+    ],
+  );
+
+  print(res);
+  // await File('res.txt').writeAsString(text);
+
+  // fetchApyar(html);
 }
 
 void fetchApyar(String html) {
@@ -31,10 +64,12 @@ void fetchApyar(String html) {
         (ele) => ele.getQuerySelectorText(selector: '.card-title'),
       ),
       DomSingleQuery(
-        (ele) => ele.getQuerySelectorAttr(selector: 'a', attr: 'href'),
+        (ele) =>
+            ele.getQuerySelectorAttr(selector: 'a', attr: Attribute('href')),
       ),
       DomSingleQuery(
-        (ele) => ele.getQuerySelectorAttr(selector: 'img', attr: 'src'),
+        (ele) =>
+            ele.getQuerySelectorAttr(selector: 'img', attr: Attribute('src')),
       ),
     ],
   );
@@ -44,7 +79,8 @@ void fetchApyar(String html) {
     queries: [
       DomSingleQuery((ele) => ele.getQuerySelectorText(selector: 'a')),
       DomSingleQuery(
-        (ele) => ele.getQuerySelectorAttr(selector: 'a', attr: 'href'),
+        (ele) =>
+            ele.getQuerySelectorAttr(selector: 'a', attr: Attribute('href')),
       ),
     ],
   );
@@ -137,5 +173,5 @@ void fetchDrmgnyo() async {
 
   print('title: ${title.getResult(data)}');
   print('coverUrl: ${imageUrl.getResult(data)}');
-  print(content.getResult(data).cleanHtmlTag());
+  print(content.getResult(data).cleanHtmlTag);
 }

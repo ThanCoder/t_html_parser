@@ -1,3 +1,6 @@
+import 'package:t_html_parser/core/extensions/t_html_element_extensions.dart';
+import 'package:t_html_parser/core/extensions/t_html_string_extensions.dart';
+import 'package:t_html_parser/core/types/attributes.dart';
 import 'package:t_html_parser/t_html_parser.dart';
 
 class TExtractor {
@@ -24,7 +27,7 @@ class TExtractor {
         // is attr
         final res = ele.getQuerySelectorAttr(
           selector: val.selector,
-          attr: val.attribute!,
+          attr: Attribute(val.attribute!),
         );
         result[key] = res;
       }

@@ -1,5 +1,7 @@
 import 'package:html/dom.dart';
-import 'package:t_html_parser/core/t_html_extensions.dart';
+import 'package:t_html_parser/core/extensions/t_html_element_extensions.dart';
+import 'package:t_html_parser/core/extensions/t_html_string_extensions.dart';
+import 'package:t_html_parser/core/types/attributes.dart';
 
 class FQuery {
   FQuery({
@@ -66,19 +68,21 @@ class FQuery {
     if (selector == null) {
       if (isHtmlStyleText) {
         final html = ele.outerHtml;
-        return html.cleanHtmlTag().trim();
+        return html.cleanHtmlTag.trim();
       }
       return ele.text.trim();
     }
 
     // attr ရှိနေရင်
     if (attr != null) {
-      return ele.getQuerySelectorAttr(selector: selector!, attr: attr!).trim();
+      return ele
+          .getQuerySelectorAttr(selector: selector!, attr: Attribute(attr!))
+          .trim();
     } else {
       // html style ကို clean ထုတ်မယ်
       if (isHtmlStyleText) {
         final html = ele.querySelector(selector!)?.outerHtml ?? '';
-        return html.cleanHtmlTag().trim();
+        return html.cleanHtmlTag.trim();
       }
       // is multi selector text
       if (isMultiSelector) {

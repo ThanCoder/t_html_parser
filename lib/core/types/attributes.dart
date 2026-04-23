@@ -1,12 +1,12 @@
 class Attribute {
-  final String attr;
-  const Attribute(this.attr);
+  final String attribute;
+  const Attribute(this.attribute);
 
   factory Attribute.fromHtml(HtmlAttribute attr) {
     return Attribute(attr.name);
   }
 
-  String get value => attr.trim();
+  String get value => attribute.trim();
 }
 
 enum HtmlAttribute {

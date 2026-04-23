@@ -1,32 +1,19 @@
 import 'package:html/dom.dart' as html;
+import 'package:html/parser.dart';
 
-import '../t_html_parser.dart';
-
-extension HtmlFromStringExtension on String {
+extension THtmlStringExtensions on String {
   html.Document get toHtmlDocument {
-    return THtmlParser.getHtmlDocument(this);
+    return parse(this);
   }
 
   html.Element? get toHtmlElement {
-    return THtmlParser.getHtmlElement(this);
-  }
-
-  String get cleanScriptTag {
-    return THtmlParser.cleanScriptTag(this);
-  }
-
-  String get cleanStyleTag {
-    return THtmlParser.cleanStyleTag(this);
-  }
-
-  String getNewLine({String replacer = '\n'}) {
-    return THtmlParser.getNewLine(this, replacer: replacer);
+    return toHtmlDocument.documentElement;
   }
 
   ///
   /// ### Clean Html Tag,Js Tag
   ///
-  String cleanHtmlTag() {
+  String get cleanHtmlTag {
     // remove tag
     var res = replaceAll(RegExp(r'<br\s*/?>', caseSensitive: false), '\n');
     res = res.replaceAll(
@@ -59,33 +46,5 @@ extension HtmlFromStringExtension on String {
     // ရှင်းထုတ်လိုက်မယ်
     res = res.replaceAll(jsBlockPattern, '');
     return res.trim();
-  }
-}
-
-extension HtmlDomExtension on html.Document {
-  void cleanDomTag({String tagNames = 'script,style,noscript'}) {
-    querySelectorAll(tagNames).forEach((e) => e.remove());
-  }
-}
-
-// ele
-extension HtmlEleExtension on html.Element {
-  String getQuerySelectorAttr({
-    required String selector,
-    required String attr,
-  }) {
-    return THtmlParser.getQuerySelectorAttr(this, selector, attr);
-  }
-
-  void cleanEleTag({String tagNames = 'script,style,noscript'}) {
-    querySelectorAll(tagNames).forEach((e) => e.remove());
-  }
-
-  String getQuerySelectorHtml({required String selector}) {
-    return THtmlParser.getQuerySelectorHtml(this, selector);
-  }
-
-  String getQuerySelectorText({required String selector}) {
-    return THtmlParser.getQuerySelectorText(this, selector);
   }
 }

@@ -1,4 +1,9 @@
-# 1.3.0
+# 1.5.0
+
+- Changed `Clean Code` and `Target` -> `QueryResult`
+- Fixed `QueryResult` And Some Extra Functions.
+
+## 1.3.0
 
 - Added `DomSelector`
 

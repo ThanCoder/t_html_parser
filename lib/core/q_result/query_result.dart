@@ -1,11 +1,13 @@
-import 'package:t_html_parser/core/q_result/attributes.dart';
+import 'package:t_html_parser/core/extensions/t_html_element_extensions.dart';
+import 'package:t_html_parser/core/extensions/t_html_string_extensions.dart';
+import 'package:t_html_parser/core/types/attributes.dart';
 import 'package:t_html_parser/core/q_result/web_utils.dart';
 import 'package:t_html_parser/t_html_parser.dart';
 
-typedef QueryResultSingleQueryCallback = String Function(Element ele);
+// typedef QueryResultSingleQueryCallback = String Function(Element ele);
 
 class QueryResultSingleQuery {
-  final QueryResultSingleQueryCallback fn;
+  final String Function(Element ele) fn;
   const QueryResultSingleQuery(this.fn);
 
   String call(Element ele) => fn(ele);
@@ -16,18 +18,16 @@ class QueryResult {
   final String selector;
   final String cleanDomTags;
   final bool isCleanDomTags;
-  final String Function(String attr, String html)? beforeDomQuery;
-  final String Function(String attr, String? result)? afterQuery;
   QueryResult({
     required this.attr,
     required this.selector,
     this.isCleanDomTags = false,
-    this.cleanDomTags = 'script,style,noscript',
-    this.beforeDomQuery,
-    this.afterQuery,
+    this.cleanDomTags = 'script,style,noscript, div[id^="pf-"]',
   });
 
-  // String _getText(List<>)
+  ///
+  /// ### Fetch Multiple
+  ///
   List<List<String>> getResultList(
     String html, {
     List<QueryResultSingleQuery> singleQueries = const [],
@@ -52,7 +52,7 @@ class QueryResult {
       } else {
         // default query
         if (attr.value == 'text') {
-          result = ele.text.trim();
+          result = ele.getQuerySelectorText(selector: '');
         } else if (attr.value == 'textContent') {
           result = ele.textContent;
         } else if (attr.value == 'html') {
@@ -73,13 +73,13 @@ class QueryResult {
     return list;
   }
 
+  ///
+  /// ### Fetch Single Text
+  ///
   String getResult(String html, {String def = '', int index = 0}) {
-    // before query
-    if (beforeDomQuery != null) {
-      return beforeDomQuery?.call(attr.value, html) ?? def;
-    }
     // dom
     final dom = html.toHtmlDocument;
+    // clean
     if (isCleanDomTags && cleanDomTags.isNotEmpty) {
       dom.cleanDomTag(tagNames: cleanDomTags);
     }
@@ -90,7 +90,7 @@ class QueryResult {
     String? result;
     // print(ele.attributes);
     if (attr.value == 'text') {
-      result = ele.text.trim();
+      result = ele.getQuerySelectorText(selector: '');
     } else if (attr.value == 'textContent') {
       result = ele.textContent;
     } else if (attr.value == 'html') {
@@ -101,10 +101,36 @@ class QueryResult {
       // attribute
       result = ele.attributes[attr.value];
     }
+    return result ?? def;
+  }
 
-    // after query
-    if (afterQuery != null) {
-      return afterQuery?.call(attr.value, result) ?? def;
+  ///
+  /// ### Fetch Single Text
+  ///
+  /// `selector.isEmpty ? will query current element`
+  ///
+  String getResultFromElement(
+    Element element, {
+    String def = '',
+    int index = 0,
+  }) {
+    // query selector
+    final eles = element.querySelectorAll(selector);
+    if (eles.isEmpty || eles.length < index) return def;
+    final ele = eles[index];
+    String? result;
+    // print(ele.attributes);
+    if (attr.value == 'text') {
+      result = ele.getQuerySelectorText(selector: '');
+    } else if (attr.value == 'textContent') {
+      result = ele.textContent;
+    } else if (attr.value == 'html') {
+      result = ele.innerHtml.trim();
+    } else if (attr.value == 'outerHtml') {
+      result = ele.outerHtml.trim();
+    } else {
+      // attribute
+      result = ele.attributes[attr.value];
     }
     return result ?? def;
   }

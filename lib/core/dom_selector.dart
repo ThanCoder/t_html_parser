@@ -1,3 +1,4 @@
+import 'package:t_html_parser/core/extensions/t_html_string_extensions.dart';
 import 'package:t_html_parser/t_html_parser.dart';
 
 class DomSingleQuery {

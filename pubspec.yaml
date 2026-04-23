@@ -1,6 +1,6 @@
 name: t_html_parser
 description: "html package ကိုပဲ utils class ထပ်ထည့်ထားခြင်း။"
-version: 1.3.0
+version: 1.5.0
 homepage: https://github.com/ThanCoder/t_html_parser
 repository: https://github.com/ThanCoder/t_html_parser
 
