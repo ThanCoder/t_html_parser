@@ -1,5 +1,3 @@
-import 'package:t_html_parser/core/extensions/t_html_element_extensions.dart';
-import 'package:t_html_parser/core/extensions/t_html_string_extensions.dart';
 import 'package:t_html_parser/core/types/attributes.dart';
 import 'package:t_html_parser/core/q_result/web_utils.dart';
 import 'package:t_html_parser/t_html_parser.dart';
